@@ -1,0 +1,47 @@
+{% load static %}
+<!--Navbar-->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark d-flex justify-content-end">
+        <a class="navbar-brand" href="{% url 'index' %}">Wypożyczalnia</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'lenditems' %}">Wypożycz przedmioty<span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'returnitems' %}">Zwróć przedmioty<span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'additems' %}">Dodaj przedmioty</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'lentlist' %}">Sprawdź wypożyczone przedmioty</a>
+                </li>
+                {% endif %}
+                {% if user.is_authenticated and user.is_staff %}
+                <li class="nav-item">
+                    <a class="nav-link" href="admin/">Panel moderatorski</a>
+                </li>
+                {% endif %}
+            </ul>
+            {% if user.is_authenticated %}
+                {{ request.user }} | <a href="#" onClick="document.getElementById('logout').submit()"><button class="btn btn-outline-success" type="button">Logout</button></a>
+                <form class="d-flex" id="logout" method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <input type="hidden">
+                </form>
+
+            {% else %}
+                <form class="d-flex" method="POST">
+                    <a class="nav-link" href="{% url 'login' %}"><button class="btn btn-outline-success" type="button">Zaloguj się!</button></a>
+                    {% csrf_token %}
+                    <input type="hidden">
+            {% endif %}
+            </form>
+        </div>
+</nav>

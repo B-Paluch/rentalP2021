@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Wypożycz{% endblock %}
+
+{% block content %}
+
+<main>
+  <div class="containter">
+
+      {% for items in allitems %}
+
+      Nazwa przedmiotu: {{ items.rentItemName }}<br/>
+      {% if items.rentState == None %} nie wypożyczony, {% endif %}
+      {% if items.rentState == False %} nie wypożyczony, {% endif %}
+      {% if items.rentState == True %} wypożyczony, {% endif %}
+
+      <hr/>
+
+      {% endfor %}
+
+  </div>
+
+</main>
+
+{% endblock %}
