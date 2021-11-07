@@ -12,4 +12,4 @@ class ItemCreateForm(forms.ModelForm):
 class RentItemForm(forms.ModelForm):
     class Meta:
         model = RentItem
-        exclude = ['rentItemName', 'rentState']
+        exclude = ['rentItemName', 'rentState', 'id']
