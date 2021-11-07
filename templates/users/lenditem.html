@@ -10,6 +10,8 @@
       {% for items in allitems %}
 
       Nazwa przedmiotu: {{ items.rentItemName }}<br/>
+      Id: {{ items.id }}<br/>
+      <a href="{{ items.id }}/lenditem">Wypożycz</a><br/>
       {% if items.rentState == None %} nie wypożyczony, {% endif %}
       {% if items.rentState == False %} nie wypożyczony, {% endif %}
       {% if items.rentState == True %} wypożyczony, {% endif %}
