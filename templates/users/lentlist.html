@@ -13,68 +13,41 @@
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">SZUKAJ</button>
   </form>
     <div class="accordion" id="accordionExample">
-        <div class="card">
-            <div class="card-header" id="headingOne">
-                <h2 class="mb-0">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
-                            aria-expanded="false" aria-controls="collapseOne">
-                        Obiekt 1
-                    </button>
-                </h2>
-            </div>
+        {% for item in object_list %}
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapseOne">
+                        {{ item.rentItemName}}</button>
+            </h2>
 
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                <div class="card-body">
-                    Opis obiektu 1 ze zdjęciem
+            <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>{{ item.rentItemName }}</p>
+                        <p>wypozyczony: {{ item.rentDate }}</p>
+                        <p>{{ item.name}} {{ item.surname }}</p></p>
                 </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-header" id="headingTwo">
-                <h2 class="mb-0">
-                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                            data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Obiekt 1
-                    </button>
-                </h2>
-            </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                <div class="card-body">
-                    Opis obiektu 2 ze zdjęciem
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header" id="headingThree">
-                <h2 class="mb-0">
-                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                            data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Obiekt 3
-                    </button>
-                </h2>
-            </div>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                <div class="card-body">
-                    Opis obiektu 1 ze zdjęciem
-                </div>
+        {% endfor %}
+    <div class="container p-4">
+        <div class="pagination justify-content-center">
+            <span class="step-links">
+              {% if object_list.has_previous %}
+                  <a href="?page=1">&laquo; first</a>
+                  <a href="?page={{ object_list.previous_page_number }}">previous</a>
+              {% endif %}
+
+                <span class="current">
+                    Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}
+                </span>
+
+              {% if object_list.has_next %}
+                  <a href="?page={{ object_list.next_page_number }}">next</a>
+                  <a href="?page={{ object_list.paginator.num_pages }}">last &raquo;</a>
+              {% endif %}
+            </span>
             </div>
         </div>
-    </div>
-    <div class="text-center">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">Poprzednia strona</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Następna strona</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
 </main>
 
 {% endblock %}

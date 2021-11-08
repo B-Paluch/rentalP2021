@@ -18,6 +18,15 @@ class ItemCreateMultiForm(forms.Form):
         })
     )
 
+class ItemUnassignForm(forms.Form):
+    name = forms.IntegerField(
+        label='Id przedmiotu',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'podaj id przedmiotu'
+        })
+    )
+
 ItemCreateFormset = formset_factory(ItemCreateMultiForm, extra=1)
 
 

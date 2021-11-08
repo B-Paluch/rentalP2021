@@ -1,3 +1,5 @@
+from msilib.schema import ListView
+
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,9 +11,9 @@ from django.shortcuts import redirect, render, get_object_or_404
 
 
 # Create your views here.
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 
-from users.forms import ItemCreateForm, RentItemForm, ItemCreateFormset
+from users.forms import ItemCreateForm, RentItemForm, ItemCreateFormset, ItemUnassignForm
 from users.models import RentItem
 
 
@@ -51,7 +53,16 @@ def lenditems(request):
 
 @login_required()
 def returnitems(request):
-    return render(request, 'users/returnitems.html')
+    form =ItemUnassignForm(request.POST or None)
+    context ={'form':form }
+    if request.method == 'POST':
+        unassignitems = ItemUnassignForm(request.POST)
+        if unassignitems.is_valid():
+            item = unassignitems.cleaned_data.get('id')
+            object = RentItem.objects.filter(id=item).update(name=None, surname=None, rentDate=None, rentState=False)
+            return redirect('lenditems')
+
+    return render(request, 'users/returnitems.html', context)
 
 @login_required()
 def additems(request):
@@ -85,6 +96,19 @@ def multiadditems(request):
     return render(request, template_name, {
         'formset': formset,
         'heading': heading_message,})
+
+
+class AllItemListView(ListView):
+    model = RentItem
+    paginate_by = 10
+    template_name = 'users/lentlist.html'
+
+    def get_queryset(self):
+        return RentItem.objects.filter(rentState=True)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 @login_required()
 def lentlist(request):

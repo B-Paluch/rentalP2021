@@ -3,6 +3,8 @@
 {% block title %}Dodaj przedmioty{% endblock %}
 
 {% block content %}
+    <div class="containter">
+    <h1>Dodaj przedmioty</h1>
 <form class="form-horizontal" method="POST" action="">
 {% csrf_token %}
 {{ formset.management_form }}
@@ -27,7 +29,7 @@
     </div>
 </div>
 </form>
-
+    </div>
 <script type='text/javascript'>
 function updateElementIndex(el, prefix, ndx) {
     var id_regex = new RegExp('(' + prefix + '-\\d+)');

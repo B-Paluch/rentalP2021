@@ -6,6 +6,15 @@
 
 <main>
     <h1> Return Items </h1>
+<main>
+  <div class="containter">
+    <form method="post">
+      {% csrf_token %}
+      {{form.as_p}}
+      <input type="submit" value="Zwróć" />
+    </form>
+  </div>
+</main>
 </main>
 
 {% endblock %}
