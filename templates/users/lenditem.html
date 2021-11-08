@@ -1,34 +1,25 @@
-{% extends 'base.html' %}
-
-{% block title %}Wypożycz{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% block title %}Wypożycz{% endblock %} {% block
+content %}
 
 <main>
   <div class="containter">
+    {% for items in allitems %} Nazwa przedmiotu: {{ items.rentItemName }}<br />
+    Id: {{ items.id }}<br />
 
-      {% for items in allitems %}
+    {% if user.is_authenticated %} Imie: {{ items.name }}<br />
+    Nazwisko: {{ items.surname }}<br />
+    Data: {{ items.rentDate }}<br />
+    {% endif %} {% if items.rentState == None %} nie wypożyczony
+    <a href="{{ items.id }}/lenditem">Wypożycz</a><br />
+    {% endif %} {% if items.rentState == False %} nie wypożyczony
+    <a href="{{ items.id }}/lenditem">Wypożycz</a><br />
+    {% endif %} {% if items.rentState == True %} wypożyczony {% endif %}
+    <br />
 
-      Nazwa przedmiotu: {{ items.rentItemName }}<br/>
-      Id: {{ items.id }}<br/>
+    <hr />
 
-      {% if user.is_authenticated %}
-      Imie: {{ items.name }}<br/>
-      Nazwisko: {{ items.surname }}<br/>
-      Data: {{ items.rentDate }}<br/>
-      {% endif %}
-      {% if items.rentState == None %} nie wypożyczony {% endif %}
-      {% if items.rentState == False %} nie wypożyczony {% endif %}
-      {% if items.rentState == True %} wypożyczony {% endif %}
-      <br/>
-      <a href="{{ items.id }}/lenditem">Wypożycz</a><br/>
-
-      <hr/>
-
-      {% endfor %}
-
+    {% endfor %}
   </div>
-
 </main>
 
 {% endblock %}
