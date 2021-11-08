@@ -8,6 +8,7 @@ urlpatterns = [
     path('index', views.index, name='index'),
     path('lenditems', views.lenditems, name='lenditems'),
     path('additems', views.additems, name='additems'),
+    path('addmultiitems', views.multiadditems, name='addmultiitems'),
     path('lentlist', views.lentlist, name='lentlist'),
     path('returnitems', views.returnitems, name='returnitems'),
     path('<int:_id>/lenditem', views.lenditem, name='lenditem'),

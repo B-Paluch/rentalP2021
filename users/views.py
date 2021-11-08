@@ -1,5 +1,7 @@
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms import inlineformset_factory
 from django.http import HttpResponse
 from django.http.response import Http404, HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
@@ -7,7 +9,9 @@ from django.shortcuts import redirect, render, get_object_or_404
 
 
 # Create your views here.
-from users.forms import ItemCreateForm, RentItemForm
+from django.views.generic import CreateView
+
+from users.forms import ItemCreateForm, RentItemForm, ItemCreateFormset
 from users.models import RentItem
 
 
@@ -63,6 +67,26 @@ def additems(request):
         return render(request, 'users/additems.html', {'form': additems})
 
 @login_required()
+def multiadditems(request):
+    template_name = 'users/addmultiitems.html'
+    heading_message = 'Dodaj wiele przedmiotów'
+    if request.method == 'GET':
+        formset = ItemCreateFormset(request.GET or None)
+    elif request.method == 'POST':
+        formset = ItemCreateFormset(request.POST)
+        if formset.is_valid():
+            for form in formset:
+                name = form.cleaned_data.get('name')
+                if name:
+                    RentItem(rentItemName=name).save()
+            return redirect('addmultiitems')
+        else:
+            return HttpResponse("""błędny formularz""")
+    return render(request, template_name, {
+        'formset': formset,
+        'heading': heading_message,})
+
+@login_required()
 def lentlist(request):
     return render(request, 'users/lentlist.html')
 
@@ -81,5 +105,4 @@ def lenditem(request, _id):
     context ={'form':form }
 
     return render(request,'users/lendsingleitem.html',context)
-
 
