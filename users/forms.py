@@ -5,7 +5,7 @@ from .models import RentItem
 class ItemCreateForm(forms.ModelForm):
     class Meta:
         model = RentItem
-        exclude = ['rentState', 'name', 'surname', 'rentDate']
+        exclude = ['rentState', 'name', 'surname', 'rentDate', 'id']
 
 
 # formularz do update przedmiotu (wypozyczenia)

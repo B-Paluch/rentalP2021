@@ -11,10 +11,17 @@
 
       Nazwa przedmiotu: {{ items.rentItemName }}<br/>
       Id: {{ items.id }}<br/>
+
+      {% if user.is_authenticated %}
+      Imie: {{ items.name }}<br/>
+      Nazwisko: {{ items.surname }}<br/>
+      Data: {{ items.rentDate }}<br/>
+      {% endif %}
+      {% if items.rentState == None %} nie wypożyczony {% endif %}
+      {% if items.rentState == False %} nie wypożyczony {% endif %}
+      {% if items.rentState == True %} wypożyczony {% endif %}
+      <br/>
       <a href="{{ items.id }}/lenditem">Wypożycz</a><br/>
-      {% if items.rentState == None %} nie wypożyczony, {% endif %}
-      {% if items.rentState == False %} nie wypożyczony, {% endif %}
-      {% if items.rentState == True %} wypożyczony, {% endif %}
 
       <hr/>
 

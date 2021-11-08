@@ -1,7 +1,7 @@
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.http.response import Http404
+from django.http.response import Http404, HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
 
 
@@ -66,23 +66,20 @@ def additems(request):
 def lentlist(request):
     return render(request, 'users/lentlist.html')
 
+
+
 def lenditem(request, _id):
-    try:
-        old_data = get_object_or_404(RentItem,id =_id)
-    except Exception:
-        raise Http404('Does Not Exist')
- 
-    if request.method =='POST':
-        form =RentItemForm(request.POST, instance =old_data)
- 
-        if form.is_valid():
+    old_data = get_object_or_404(RentItem,id =_id )
+    old_data.rentState = True
+
+    form =RentItemForm(request.POST or None, instance =old_data)
+
+    if form.is_valid():
             form.save()
-            return redirect('user/lenditem.html')
-     
-    else:
- 
-        form = RentItemForm(instance = old_data)
-        context ={
-            'form':form
-        }
-        return render(request,'users/lendsingleitem.html',context)
+            return HttpResponseRedirect('lenditem') 
+            
+    context ={'form':form }
+
+    return render(request,'users/lendsingleitem.html',context)
+
+
