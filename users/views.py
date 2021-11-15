@@ -8,8 +8,6 @@ from django.http import HttpResponse
 from django.http.response import Http404, HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
 
-
-
 # Create your views here.
 from django.views.generic import CreateView, ListView
 
@@ -36,33 +34,39 @@ def login(request):
         else:
             return render(request, 'users/login.html')
 
+
 @login_required()
 def logout(request):
-    if request.method =='POST':
+    if request.method == 'POST':
         auth.logout(request)
         messages.success(request, 'Pomyślnie wylogowano')
         return redirect('login')
 
+
 def index(request):
     return render(request, 'users/index.html')
+
 
 def lenditems(request):
     allitems = RentItem.objects.all()
 
     return render(request, 'users/lenditem.html', {'allitems': allitems})
 
+
 @login_required()
 def returnitems(request):
-    form =ItemUnassignForm(request.POST or None)
-    context ={'form':form }
+    form = ItemUnassignForm(request.POST or None)
+    context = {'form': form}
     if request.method == 'POST':
         unassignitems = ItemUnassignForm(request.POST)
         if unassignitems.is_valid():
             item = unassignitems.cleaned_data.get('id')
-            object = RentItem.objects.filter(id=item).update(name=None, surname=None, rentDate=None, rentState=False)
-            return redirect('lenditems')
+            if(item):
+                object = RentItem.objects.filter(id=item).update(name=None, surname=None, rentDate=None, rentState=False)
+                return redirect('lenditems')
 
     return render(request, 'users/returnitems.html', context)
+
 
 @login_required()
 def additems(request):
@@ -76,6 +80,7 @@ def additems(request):
     else:
         additems = ItemCreateForm()
         return render(request, 'users/additems.html', {'form': additems})
+
 
 @login_required()
 def multiadditems(request):
@@ -95,7 +100,7 @@ def multiadditems(request):
             return HttpResponse("""błędny formularz""")
     return render(request, template_name, {
         'formset': formset,
-        'heading': heading_message,})
+        'heading': heading_message, })
 
 
 class AllItemListView(ListView):
@@ -110,23 +115,22 @@ class AllItemListView(ListView):
         context = super().get_context_data(**kwargs)
         return context
 
+
 @login_required()
 def lentlist(request):
     return render(request, 'users/lentlist.html')
 
 
-
 def lenditem(request, _id):
-    old_data = get_object_or_404(RentItem,id =_id )
+    old_data = get_object_or_404(RentItem, id=_id)
     old_data.rentState = True
 
-    form =RentItemForm(request.POST or None, instance =old_data)
+    form = RentItemForm(request.POST or None, instance=old_data)
 
     if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('lenditem') 
-            
-    context ={'form':form }
+        form.save()
+        return HttpResponseRedirect('lenditem')
 
-    return render(request,'users/lendsingleitem.html',context)
+    context = {'form': form}
 
+    return render(request, 'users/lendsingleitem.html', context)

@@ -1,0 +1,156 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Sample API
+  description: A sample API to illustrate OpenAPI concepts
+paths:
+  /:
+    get:
+      description: Main page of website
+      responses:
+        '200':
+          description: Successful response
+  /login:
+    get:
+      description: Login page
+    post:
+      description: Login request to webpage
+      responses:
+        '200':
+          description: Successfully logged in
+        '400':
+          description: Invalid request
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: array
+              items:
+                type: object
+                required:
+                  - rentalUsername
+                  - rentalPassword
+                properties:
+                  rentalUsername:
+                    type: string
+                  password:
+                    type: string
+                  rentalPassword:
+                    type: string
+  /logout:
+    get:
+      description: Logs out logged in user
+  /lenditems:
+    get:
+      description: View to show available and unavailable items depending if user is admin
+  /additems:
+    get:
+      description: Form to add new item
+    post:
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: array
+              items:
+                type: object
+                required:
+                  - rentItemName
+                properties:
+                  rentItemName:
+                    type: string
+      description: Adds item to webpage
+      responses:
+        '200':
+          description: Successfully Added item
+        '400':
+          description: Invalid request
+  /addmultiitems:
+    get:
+      description: Form to add new items
+    post:
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: array
+              items:
+                type: object
+                required:
+                  - rentItemName
+                properties:
+                  rentItemName:
+                    type: string
+      description: Adds item to webpage
+      responses:
+        '200':
+          description: Successfully Added item
+        '400':
+          description: Invalid request
+  /lendlist:
+    get:
+      description: View to show lent items to administrator
+  /returnitems:
+    get:
+      description: Form to return items
+    post:
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: array
+              items:
+                type: object
+                required:
+                  - id
+                properties:
+                  id:
+                    type: integer
+      description: view to return an item
+      responses:
+        '200':
+          description: Successfully Added item
+        '400':
+          description: Invalid request
+  /{id}/lenditem:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+          maximum: 1
+          description: Id of item to lend
+    get:
+      description: Form to return items
+    post:
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: array
+              items:
+                type: object
+                required:
+                  - name
+                properties:
+                  name:
+                    type: string
+                  surname:
+                    type: string
+                  rentDate:
+                    type: string
+                    format: datetime
+      description: view to return an item
+      responses:
+        '200':
+          description: Successfully lent item
+        '400':
+          description: Invalid request
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+security:
+  - BasicAuth: [ ]

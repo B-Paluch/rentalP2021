@@ -19,7 +19,7 @@ class ItemCreateMultiForm(forms.Form):
     )
 
 class ItemUnassignForm(forms.Form):
-    name = forms.IntegerField(
+    id = forms.IntegerField(
         label='Id przedmiotu',
         widget=forms.TextInput(attrs={
             'class': 'form-control',
