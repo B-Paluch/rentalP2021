@@ -131,7 +131,7 @@ def lenditem(request, _id):
 
     if form.is_valid():
         form.save()
-        return HttpResponseRedirect('lenditem')
+        return HttpResponseRedirect('/lenditems')
 
     context = {'form': form}
 
