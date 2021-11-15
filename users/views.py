@@ -13,6 +13,7 @@ from django.views.generic import CreateView, ListView
 
 from users.forms import ItemCreateForm, RentItemForm, ItemCreateFormset, ItemUnassignForm
 from users.models import RentItem
+from datetime import datetime
 
 
 def login(request):
@@ -124,6 +125,7 @@ def lentlist(request):
 def lenditem(request, _id):
     old_data = get_object_or_404(RentItem, id=_id)
     old_data.rentState = True
+    old_data.rentDate = datetime.now()
 
     form = RentItemForm(request.POST or None, instance=old_data)
 

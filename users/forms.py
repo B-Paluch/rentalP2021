@@ -34,4 +34,4 @@ ItemCreateFormset = formset_factory(ItemCreateMultiForm, extra=1)
 class RentItemForm(forms.ModelForm):
     class Meta:
         model = RentItem
-        exclude = ['rentItemName', 'rentState', 'id']
+        exclude = ['rentItemName', 'rentState', 'id', 'rentDate']
