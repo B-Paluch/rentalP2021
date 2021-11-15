@@ -13,6 +13,9 @@ paths:
   /login:
     get:
       description: Login page
+      responses:
+        '200':
+          description: Successful response
     post:
       description: Login request to webpage
       responses:
@@ -40,12 +43,21 @@ paths:
   /logout:
     get:
       description: Logs out logged in user
+      responses:
+        '200':
+          description: Successful response
   /lenditems:
     get:
       description: View to show available and unavailable items depending if user is admin
+      responses:
+        '200':
+          description: Successful response
   /additems:
     get:
       description: Form to add new item
+      responses:
+        '200':
+          description: Successful response
     post:
       requestBody:
         content:
@@ -68,6 +80,9 @@ paths:
   /addmultiitems:
     get:
       description: Form to add new items
+      responses:
+        '200':
+          description: Successful response
     post:
       requestBody:
         content:
@@ -90,9 +105,15 @@ paths:
   /lendlist:
     get:
       description: View to show lent items to administrator
+      responses:
+        '200':
+          description: Successful response
   /returnitems:
     get:
       description: Form to return items
+      responses:
+        '200':
+          description: Successful response
     post:
       requestBody:
         content:
@@ -123,6 +144,9 @@ paths:
           description: Id of item to lend
     get:
       description: Form to return items
+      responses:
+        '200':
+          description: Successful response
     post:
       requestBody:
         content:
