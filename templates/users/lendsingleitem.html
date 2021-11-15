@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
 
 {% block title %}Wypożycz{% endblock %}
-
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static "css/signin.css" %}">
+{% endblock %}
 {% block content %}
 
-<main>
+<main class="form-signin">
   <div class="containter">
     <form method="post">
       {% csrf_token %} 
       {{form.as_p}}
-      <input type="submit" value="Wypożycz" />
+      <input class="w-100 btn btn-lg btn-primary" type="submit" value="Wypożycz" />
     </form>
   </div>
 </main>

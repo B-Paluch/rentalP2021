@@ -1,35 +1,39 @@
 {% extends 'base.html' %}
 
 {% block title %}Wypożycz{% endblock %}
-
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static "css/signin.css" %}">
+{% endblock %}
 {% block content %}
 
 <main>
+ <div class="album py-5 bg-light">
   <div class="containter">
-
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       {% for items in allitems %}
-
-      Nazwa przedmiotu: {{ items.rentItemName }}<br/>
-      Id: {{ items.id }}<br/>
-
-
-      {% if items.rentState == None or items.rentState == False %} nie wypożyczony <a href="{{ items.id }}/lenditem">Wypożycz</a><br/>
+      <div class="col">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <p class="card-text">Nazwa przedmiotu: {{ items.rentItemName }}</p>
+              <p class="card-text">Id: {{ items.id }}</p>
+      {% if items.rentState == None or items.rentState == False %}<p class="card-text" style="color:green"> Nie wypożyczony </p><a href="{{ items.id }}/lenditem">Wypożycz</a><br/>
 
       {% endif %}
-      {% if items.rentState == True %} wypożyczony<br><br>
+      {% if items.rentState == True %}<p class="card-text" style="color:red"> Wypożyczony</p>
       {% if user.is_authenticated %}
-      Imie: {{ items.name }}<br/>
-      Nazwisko: {{ items.surname }}<br/>
-      Data: {{ items.rentDate }}
+      <p class="card-text">Imie: {{ items.name }}</p>
+      <p class="card-text">Nazwisko: {{ items.surname }}</p>
+      <p class="card-text">Data: {{ items.rentDate }}</p>
       {% endif %}{% endif %}
-      <br/>
-
-      <hr/>
-
+  </div>
+    </div>
+      </div>
       {% endfor %}
 
   </div>
-
+</div>
+  </div>
 </main>
 
 {% endblock %}

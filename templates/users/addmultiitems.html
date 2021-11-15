@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
 {% block title %}Dodaj przedmioty{% endblock %}
-
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static "css/signin.css" %}">
+{% endblock %}
 {% block content %}
     <div class="containter">
     <h1>Dodaj przedmioty</h1>

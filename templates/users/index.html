@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 
 {% block title %}Wypożyczalnia{% endblock %}
-
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static "css/signin.css" %}">
+{% endblock %}
 {% block content %}
 
-<main>
+<main class="form-signin">
     <h1> Index </h1>
 </main>
 

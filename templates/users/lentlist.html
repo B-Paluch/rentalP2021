@@ -1,13 +1,19 @@
 {% extends 'base.html' %}
 
 {% block title %}Wypożyczalnia{% endblock %}
-
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static "css/signin.css" %}">
+{% endblock %}
 {% block content %}
 
 <main>
 
-
 <div class="container mt-5 text-center text-capitalize">
+  <form class="justify-content-center form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Obiekt do znalezienia" aria-label="Search">
+    <button class="w-100 btn btn-lg btn-primary" type="submit">SZUKAJ</button>
+  </form>
     <div class="accordion" id="accordionExample">
         {% for item in object_list %}
         <div class="accordion-item">
@@ -19,7 +25,7 @@
             <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                     <p>{{ item.rentItemName }}</p>
-                        <p>wypozyczony: {{ item.rentDate }}</p>
+                        <p>Wypozyczony: {{ item.rentDate }}</p>
                         <p>{{ item.name}} {{ item.surname }}</p></p>
                 </div>
             </div>
