@@ -49,9 +49,15 @@ def index(request):
 
 
 def lenditems(request):
-    allitems = RentItem.objects.all()
-
-    return render(request, 'users/lenditem.html', {'allitems': allitems})
+    if 'q' in request.GET:
+        q = request.GET['q']
+        data = RentItem.objects.filter(rentItemName__icontains=q)
+    else:
+        data = RentItem.objects.all()
+    context = {
+        'data': data
+    }
+    return render(request, 'users/lenditem.html', context)
 
 
 @login_required()

@@ -32,6 +32,8 @@ ItemCreateFormset = formset_factory(ItemCreateMultiForm, extra=1)
 
 # formularz do update przedmiotu (wypozyczenia)
 class RentItemForm(forms.ModelForm):
+    name = forms.CharField(label = 'imie')
+    surname = forms.CharField(label = 'nazwisko')
     class Meta:
         model = RentItem
-        exclude = ['rentItemName', 'rentState', 'id', 'rentDate']
+        fields = ('name', 'surname')
