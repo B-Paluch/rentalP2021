@@ -11,11 +11,11 @@
 
 <div class="container mt-5 text-center text-capitalize">
   <form class="justify-content-center form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Obiekt do znalezienia" aria-label="Search">
+    <input class="form-control mr-sm-2" name="q" type="search" placeholder="Obiekt do znalezienia" aria-label="Search">
     <button class="w-100 btn btn-lg btn-primary" type="submit">SZUKAJ</button>
   </form>
     <div class="accordion" id="accordionExample">
-        {% for item in object_list %}
+        {% for item in page_obj %}
         <div class="accordion-item">
             <h2 class="accordion-header" id="heading{{ forloop.counter }}">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapseOne">
@@ -31,25 +31,26 @@
             </div>
         </div>
         {% endfor %}
-    <div class="container p-4">
-        <div class="pagination justify-content-center">
-            <span class="step-links">
-              {% if object_list.has_previous %}
-                  <a href="?page=1">&laquo; first</a>
-                  <a href="?page={{ object_list.previous_page_number }}">previous</a>
-              {% endif %}
+    
+    <div class = "container p-4"
+    <div class="pagination justify-content-center">
+    <span class="step-links">
+      {% if page_obj.has_previous %}
+      <a href="?page=1">&laquo; Pierwsza</a>
+      <a href="?page={{ page_obj.previous_page_number }}">Poprzednia</a>
+      {% endif %}
 
-                <span class="current">
-                    Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}
-                </span>
+      <span class="current">
+        Strona {{ page_obj.number }} z {{ page_obj.paginator.num_pages }}.
+      </span>
 
-              {% if object_list.has_next %}
-                  <a href="?page={{ object_list.next_page_number }}">next</a>
-                  <a href="?page={{ object_list.paginator.num_pages }}">last &raquo;</a>
-              {% endif %}
-            </span>
-            </div>
-        </div>
+      {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">Kolejna</a>
+      <a href="?page={{ page_obj.paginator.num_pages }}">Ostatnia &raquo;</a>
+      {% endif %}
+    </span>
+  </div>
+</div>
 </main>
 
 {% endblock %}

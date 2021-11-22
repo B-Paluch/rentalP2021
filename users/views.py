@@ -53,14 +53,11 @@ def lenditems(request):
     if 'q' in request.GET:
         q = request.GET['q']
         data = RentItem.objects.filter(rentItemName__icontains=q)
-        paginator = Paginator(data, 9) 
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
     else:
         data = RentItem.objects.all()
-        paginator = Paginator(data, 9) 
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
+    paginator = Paginator(data, 9) 
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
         'page_obj' : page_obj
     }
@@ -124,7 +121,15 @@ class AllItemListView(ListView):
 
 
     def get_queryset(self):
-        return RentItem.objects.filter(rentState=True)
+        if 'q' in self.request.GET:
+            q = self.request.GET['q']
+            items =  RentItem.objects.filter(rentItemName__icontains=q).filter(rentState = True)
+        else:
+            items = RentItem.objects.filter(rentState=True)
+        paginator = Paginator(items, 10) 
+        page_number = self.request.GET.get('page')
+        return paginator.get_page(page_number)
+            
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
