@@ -120,6 +120,9 @@ class AllItemListView(ListView):
 
 
     def get_queryset(self):
+        if 'q' in self.request.GET:
+            q = self.request.GET['q']
+            return RentItem.objects.filter(rentItemName__icontains=q).filter(rentState=True)
         return RentItem.objects.filter(rentState=True)
 
     def get_context_data(self, **kwargs):
