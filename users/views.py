@@ -1,15 +1,11 @@
-from msilib.schema import ListView
-
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms import inlineformset_factory
 from django.http import HttpResponse
-from django.http.response import Http404, HttpResponseRedirect
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
 
 # Create your views here.
-from django.views.generic import CreateView, ListView
+from django.views.generic import ListView
 
 from users.forms import ItemCreateForm, RentItemForm, ItemCreateFormset, ItemUnassignForm
 from users.models import RentItem
