@@ -14,6 +14,7 @@ from django.views.generic import CreateView, ListView
 from users.forms import ItemCreateForm, RentItemForm, ItemCreateFormset, ItemUnassignForm
 from users.models import RentItem
 from datetime import datetime
+from django.core.paginator import Paginator
 
 
 def login(request):
@@ -52,10 +53,16 @@ def lenditems(request):
     if 'q' in request.GET:
         q = request.GET['q']
         data = RentItem.objects.filter(rentItemName__icontains=q)
+        paginator = Paginator(data, 9) 
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
     else:
         data = RentItem.objects.all()
+        paginator = Paginator(data, 9) 
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
     context = {
-        'data': data
+        'page_obj' : page_obj
     }
     return render(request, 'users/lenditem.html', context)
 
@@ -114,6 +121,7 @@ class AllItemListView(ListView):
     model = RentItem
     paginate_by = 10
     template_name = 'users/lentlist.html'
+
 
     def get_queryset(self):
         return RentItem.objects.filter(rentState=True)
