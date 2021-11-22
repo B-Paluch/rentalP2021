@@ -11,10 +11,10 @@ class ItemCreateForm(forms.ModelForm):
 
 class ItemCreateMultiForm(forms.Form):
     name = forms.CharField(
-        label='Nazwa przedmiotu',
+        label='nazwa przedmiotu',
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Podaj nazwę przedmiotu'
+            'placeholder': 'podaj nazwę przedmiotu'
         })
     )
 
@@ -23,7 +23,7 @@ class ItemUnassignForm(forms.Form):
         label='Id przedmiotu',
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Podaj id przedmiotu'
+            'placeholder': 'podaj id przedmiotu'
         })
     )
 
@@ -37,3 +37,5 @@ class RentItemForm(forms.ModelForm):
     class Meta:
         model = RentItem
         fields = ('name', 'surname')
+
+        
