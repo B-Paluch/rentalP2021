@@ -10,9 +10,9 @@
 <main>
 
 <div class="container mt-5 text-center text-capitalize">
-  <form class="justify-content-center form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Obiekt do znalezienia" aria-label="Search">
-    <button class="w-100 btn btn-lg btn-primary" type="submit">SZUKAJ</button>
+    <form class="form-search">
+      <input class="form-control mr-sm-2" name="q" type="search" placeholder="Szukaj po nazwie" aria-label="Search">
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Szukaj</button>
   </form>
     <div class="accordion" id="accordionExample">
         {% for item in object_list %}
