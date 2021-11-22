@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 
 class RentItem(models.Model):
-    id = models.IntegerField(primary_key = True, auto_created=True)
+    id = models.AutoField(primary_key = True, auto_created=True)
     rentItemName = models.CharField(max_length=50, null=False)
     rentState = models.BooleanField(default=False, blank=True, null=True)
     name = models.CharField(max_length=50, default=None, blank=True, null=True)
