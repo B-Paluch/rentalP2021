@@ -116,7 +116,7 @@ def multiadditems(request):
 
 class AllItemListView(ListView):
     model = RentItem
-    paginate_by = 10
+    paginate_by = 5
     template_name = 'users/lentlist.html'
 
 
@@ -126,9 +126,7 @@ class AllItemListView(ListView):
             items =  RentItem.objects.filter(rentItemName__icontains=q).filter(rentState = True)
         else:
             items = RentItem.objects.filter(rentState=True)
-        paginator = Paginator(items, 10) 
-        page_number = self.request.GET.get('page')
-        return paginator.get_page(page_number)
+        return items
             
 
     def get_context_data(self, **kwargs):
